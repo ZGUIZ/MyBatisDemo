@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Maven: org.mybatis:mybatis:3.4.6">
+    <archive path="C:/Users/Amia/.m2/repository/org/mybatis/mybatis/3.4.6/mybatis-3.4.6.jar" />
+  </library>
+  <library name="Maven: mysql:mysql-connector-java:5.1.26">
+    <archive path="C:/Users/Amia/.m2/repository/mysql/mysql-connector-java/5.1.26/mysql-connector-java-5.1.26.jar" />
+  </library>
+</eclipse-userlibraries>
+

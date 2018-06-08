@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zguiz.mapper.CategoryMapper">
+    <select id="getCategoryByBookName" parameterType="com.zguiz.bean.Book" resultType="com.zguiz.bean.Category">
+        select * from category where id in (
+          select category_id from book where book_name=#{bookName}
+        );
+    </select>
+</mapper>
