@@ -13,4 +13,52 @@
         <result property="publishDate" column="publish_date"/>
         <result property="categoryId" column="category_id"/>
     </resultMap>
+
+    <insert id="addBook" parameterType="Book">
+        INSERT INTO book(isbn,book_name,price,publish_date,publisher,category_id) VALUE (#{isbn},#{bookName},#{price},#{publishDate},#{publisher},#{categoryId})
+    </insert>
+    <resultMap id="BookResultMap" type="Book">
+        <result column="book_name" property="bookName"/>
+        <result column="price" property="price"/>
+        <result column="publish_date" property="publishDate"/>
+        <result column="publisher" property="publisher"/>
+        <association property="category" column="category_id" select="selectCategoryForBook" />
+    </resultMap>
+    <select id="findAll" resultMap="BookResultMap" resultType="Book">
+        select * from book;
+    </select>
+    <select id="findBook" resultMap="BookResultMap" resultType="Book">
+        select * from book
+        <where>
+            <if test="isbn!=null">
+                isbn = #{isbn}
+            </if>
+            <if test="bookName!=null">
+                and book_name like "%"#{bookName}"%"
+            </if>
+            <if test="price > 0">
+                and price = #{price}
+            </if>
+            <if test="publishDate!=null">
+                and publish_date=#{publishDate}
+            </if>
+            <if test="publisher!=null">
+                and publisher=#{publisher}
+            </if>
+        </where>
+    </select>
+    <resultMap id="BookResultMap2" type="Book">
+        <result column="book_name" property="bookName"/>
+        <result column="price" property="price"/>
+        <result column="publish_date" property="publishDate"/>
+        <result column="publisher" property="publisher"/>
+        <result column="id" property="category.id"/>
+        <result column="name" property="category.name"/>
+    </resultMap>
+    <select id="findAllBookAndCategory" resultMap="BookResultMap2" resultType="Book">
+        select * from book left join category on (book.category_id=category.id);
+    </select>
+    <select id="selectCategoryForBook" parameterType="int" resultType="Category">
+        select * from category where id=#{category_id};
+    </select>
 </mapper>

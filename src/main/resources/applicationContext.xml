@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--  引入配置文件  -->
+    <context:property-placeholder
+        ignore-resource-not-found="true"
+        location="classpath:jdbc_config.properties"/>
+
+    <bean id="Book" class="com.zguiz.bean.Book" scope="prototype"></bean>
+    <bean id="Category" class="com.zguiz.bean.Category" scope="prototype"></bean>
+    <bean id="Cart" class="com.zguiz.bean.Cart" scope="prototype"/>
+    <bean id="CartItem" class="com.zguiz.bean.CartItem" scope="prototype"/>
+    <bean id="Customer" class="com.zguiz.bean.Customer" scope="prototype"/>
+
+</beans>

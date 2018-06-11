@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface BookMapper {
     List<Book> findBookByCategoryName(Category category);
+    List<Book> findAll();
+    int addBook(Book book);
+    List<Book> findAllBookAndCategory();
+    List<Book> findBook(Book book);
 }
