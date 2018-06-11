@@ -6,6 +6,7 @@ import com.zguiz.Service.CartService;
 import com.zguiz.Service.CustomerService;
 import com.zguiz.bean.Book;
 import com.zguiz.bean.Cart;
+import com.zguiz.bean.CartItem;
 import com.zguiz.bean.Customer;
 
 import java.util.List;
@@ -26,17 +27,18 @@ public class Main {
         CartItemService itemService=new CartItemService();
         CartService cartService=new CartService();
 
-
         boolean flag=true;  //标记是否结束
         int selected;
         while (flag) {
+            System.out.println("===================================");
             System.out.println("请选择：");
             System.out.println("1.登录");
             System.out.println("2.注册");
             System.out.println("3.查找书籍");
             System.out.println("4.购买");
-            System.out.println("5.注销");
-            System.out.println("6.退出");
+            System.out.println("5.查看购买记录");
+            System.out.println("6.注销");
+            System.out.println("7.退出");
             String num = scanner.nextLine();
             try {
                 selected = Integer.parseInt(num);
@@ -49,23 +51,28 @@ public class Main {
             switch (selected){
                 case 1:
                     customer=login();
-                    cart=setCart(cartService,customer);
+
                     break;
                 case 2:
                     customer=register();
-                    cart=setCart(cartService,customer);
                     break;
                 case 3:
                     findBoods();
                     break;
                 case 4:
+                    if(cart==null&&customer!=null){
+                        cart=setCart(cartService,customer);
+                    }
                     buy(itemService,cart);
                     break;
                 case 5:
+                    findBuyHistory(customer);
+                    break;
+                case 6:
                     customer=null;
                     cart=null;
                     break;
-                case 6:
+                case 7:
                     flag=false;
                     break;
             }
@@ -164,6 +171,23 @@ public class Main {
         }
         catch (Exception e){
             System.out.println(e.getMessage());
+        }
+    }
+
+    private static void findBuyHistory(Customer customer){
+        if(customer==null){
+            System.out.println("请登陆");
+            return;
+        }
+        CustomerService customerService=new CustomerService();
+        List<Cart> carts=customerService.findBuyHistory(customer);
+        for(Cart cart:carts){
+            System.out.println("账号："+customer.getAccount()+"\t日期:"+cart.getCreateDate());
+            List<CartItem> items=cart.getCartItems();
+            for (CartItem item:items){
+                System.out.println(item);
+
+            }
         }
     }
 

@@ -9,6 +9,8 @@ public class CartItem {
     private Date addTime;
     private int count;
 
+    private Book book;
+
     public CartItem() {
     }
 
@@ -57,5 +59,17 @@ public class CartItem {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public String toString(){
+        return book.getBookName()+"\t"+book.getIsbn()+"\t"+book.getPublisher()+"\t"+count+"\t"+addTime;
     }
 }

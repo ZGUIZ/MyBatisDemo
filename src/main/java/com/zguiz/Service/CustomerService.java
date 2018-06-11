@@ -1,6 +1,8 @@
 package com.zguiz.Service;
 
-import com.zguiz.bean.Customer;
+import com.zguiz.bean.*;
+import com.zguiz.mapper.BookMapper;
+import com.zguiz.mapper.CartMapper;
 import com.zguiz.mapper.CustomerMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -25,6 +27,7 @@ public class CustomerService extends BaseService{
         if(customers.size()!=0){
             return customers.get(0);
         }
+        System.out.println("登录失败!");
         return null;
     }
 
@@ -47,6 +50,26 @@ public class CustomerService extends BaseService{
         }
         sqlSession.close();
         return cus;
+    }
+
+    public List<Cart> findBuyHistory(Customer customer){
+        Cart cart= (Cart) context.getBean("Cart");
+        cart.setUserId(customer.getUserId());
+        SqlSession sqlSession=sqlSessionFactory.openSession();
+        CartMapper cartMapper=sqlSession.getMapper(CartMapper.class);
+        List<Cart> carts=cartMapper.findCart(cart);
+        BookMapper bookMapper=sqlSession.getMapper(BookMapper.class);
+        for(Cart c:carts){
+            List<CartItem> items=c.getCartItems();
+            for(CartItem item:items){
+                Book book=new Book();
+                book.setIsbn(item.getBookId());
+                List<Book> bookList=bookMapper.findBook(book);
+                item.setBook(bookList.get(0));
+            }
+        }
+        sqlSession.close();
+        return carts;
     }
 
 }

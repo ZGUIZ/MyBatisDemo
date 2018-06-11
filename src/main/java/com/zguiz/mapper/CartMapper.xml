@@ -24,5 +24,16 @@
         <id column="cart_id" property="cartId"/>
         <result column="user_id" property="userId"/>
         <result column="create_date" property="createDate"/>
+        <collection property="cartItems" ofType="CartItem" select="findChildCartItem" column="cart_id"/>
+    </resultMap>
+    <select id="findChildCartItem" resultMap="CartItemMapper" resultType="CartItem" parameterType="int">
+        select * from cart_item where cart_id = #{cart_id}
+    </select>
+    <resultMap id="CartItemMapper" type="CartItem">
+        <id column="cart_item" property="cartItem"/>
+        <result column="cart_id" property="cartId"/>
+        <result column="book_id" property="bookId"/>
+        <result column="count" property="count"/>
+        <result column="add_time" property="addTime"/>
     </resultMap>
 </mapper>
