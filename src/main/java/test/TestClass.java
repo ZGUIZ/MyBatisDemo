@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TestClass {
     public static void main(String[] args){
-        String resource="mybatis-conf.xml";
+        String resource= "mybatis-conf.xml";
         InputStream inputStream=null;
         SqlSession sqlSession=null;
         try {
