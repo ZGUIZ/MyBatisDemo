@@ -51,7 +51,6 @@ public class Main {
             switch (selected){
                 case 1:
                     customer=login();
-
                     break;
                 case 2:
                     customer=register();
@@ -186,7 +185,6 @@ public class Main {
             List<CartItem> items=cart.getCartItems();
             for (CartItem item:items){
                 System.out.println(item);
-
             }
         }
     }

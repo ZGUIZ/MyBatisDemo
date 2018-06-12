@@ -61,7 +61,8 @@
     <select id="selectCategoryForBook" parameterType="int" resultType="Category">
         select * from category where id=#{category_id};
     </select>
-    <update id="updateBook" parameterType="Book">
+
+    <sql id="updateSql">
         update book
         <set>
             <if test="bookName!=null">
@@ -81,5 +82,73 @@
             </if>
         </set>
         where isbn=#{isbn}
+    </sql>
+
+    <update id="updateBook" parameterType="Book">
+        <include refid="updateSql"/>
+    </update>
+
+    <!--  分页查询条件  -->
+    <sql id="pagerParam">
+        <where>
+            <if test="param!=null and param.bookName!=null">
+                book_name like "%"#{param.bookName}"%"
+            </if>
+            <if test="param!=null and param.isbn!=null">
+                and isbn like "%"#{param.isbn}"%"
+            </if>
+            <if test="param!=null and param.price > 0">
+                and price &lt;= #{param.price}
+            </if>
+            <if test="param!=null and param.publishDate!=null">
+                and publish_date=#{param.publishDate}
+            </if>
+            <if test="param!=null and param.publisher!=null">
+                and publisher=#{param.publisher}
+            </if>
+        </where>
+    </sql>
+    <!--分页查询-->
+    <select id="findByPager" parameterType="Pager" resultMap="BookResultMap">
+        select * from book
+        <include refid="pagerParam"/>
+        limit #{startIndex},#{pageSize}
+    </select>
+    <!--总数量统计-->
+    <select id="countForPager" parameterType="Pager" resultType="int">
+        select count(isbn) from book
+        <include refid="pagerParam"/>
+    </select>
+
+    <!--批量查找-->
+    <select id="findByIsbnList" resultType="Book" parameterType="String" resultMap="BookResultMap2">
+        select * from book where isbn in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <!--批量删除-->
+    <delete id="deleteByIsbnList" parameterType="String">
+        delete from book where isbn in
+        <foreach item="item" collection="list" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <resultMap id="BookResultMap3" type="Book">
+        <result column="book_name" property="bookName"/>
+        <result column="price" property="price"/>
+        <result column="publish_date" property="publishDate"/>
+        <result column="publisher" property="publisher"/>
+        <result property="categoryId" column="category_id" />
+    </resultMap>
+    <!--批量修改-->
+    <update id="editBooks" parameterType="Book" parameterMap="BookResultMap3">
+        update book
+
+        where isbn in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{isbn}
+        </foreach>
     </update>
 </mapper>

@@ -1,9 +1,14 @@
 package com.zguiz.bean;
 
-public class Pager {
+import java.util.List;
+
+public class Pager<T> {
     private int currentPage=1;
     private int pageSize=10;
     private int total;
+
+    private T param;
+    private List<T> results;
 
     public Pager() {
     }
@@ -49,6 +54,22 @@ public class Pager {
 
     public int getStartIndex(){
         return (currentPage-1)*pageSize;
+    }
+
+    public T getParam() {
+        return param;
+    }
+
+    public void setParam(T param) {
+        this.param = param;
+    }
+
+    public List<T> getResults() {
+        return results;
+    }
+
+    public void setResults(List<T> results) {
+        this.results = results;
     }
 
     /**
