@@ -61,4 +61,25 @@
     <select id="selectCategoryForBook" parameterType="int" resultType="Category">
         select * from category where id=#{category_id};
     </select>
+    <update id="updateBook" parameterType="Book">
+        update book
+        <set>
+            <if test="bookName!=null">
+                book_name=#{bookName},
+            </if>
+            <if test="price>0">
+                price=#{price},
+            </if>
+            <if test="publishDate!=null">
+                publish_date=#{publishDate},
+            </if>
+            <if test="publisher!=null">
+                publisher=#{publisher},
+            </if>
+            <if test="categoryId>0">
+                category_id=#{categoryId}
+            </if>
+        </set>
+        where isbn=#{isbn}
+    </update>
 </mapper>

@@ -11,4 +11,5 @@ public interface BookMapper {
     int addBook(Book book);
     List<Book> findAllBookAndCategory();
     List<Book> findBook(Book book);
+    int updateBook(Book book);
 }

@@ -14,7 +14,7 @@ public abstract class BaseService {
     protected static ApplicationContext context;
 
     static{
-        String resource="mybatis-conf.xml";
+        String resource= "mybatis-conf.xml";
         String contextResource="applicationContext.xml";
         InputStream is=null;
         try {
