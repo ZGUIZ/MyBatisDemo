@@ -15,6 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Test {
@@ -125,11 +126,13 @@ public class Test {
         List<Book> bookList=new ArrayList<Book>();
         Book book1=new Book();
         book1.setIsbn("ISBN-21554-5412-26");
-        book1.setPrice(39.9);
+        book1.setPrice(34);
+        book1.setBookName("乌合之众");
         bookList.add(book1);
         Book book2=new Book();
-        book1.setIsbn("ISBN-21554-5412-25");
-        book2.setPrice(54.9);
+        book2.setIsbn("ISBN-21554-5412-25");
+        book2.setBookName("微粒社会");
+        book2.setPrice(54);
         bookList.add(book2);
         SqlSession sqlSession=sqlSessionFactory.openSession();
         BookMapper bookMapper=sqlSession.getMapper(BookMapper.class);
@@ -137,5 +140,29 @@ public class Test {
         sqlSession.commit();
         sqlSession.close();
     }
-
+    @org.junit.Test
+    public void testinsertByList(){
+        List<Book> bookList=new ArrayList<Book>();
+        Book book1=new Book();
+        book1.setIsbn("ISBN-21554-5412-37");
+        book1.setPrice(34.3);
+        book1.setBookName("设计模式");
+        book1.setPublishDate(new Date());
+        book1.setPublisher("大宁电子出版社");
+        book1.setCategoryId(1);
+        bookList.add(book1);
+        Book book2=new Book();
+        book2.setIsbn("ISBN-21554-5412-38");
+        book2.setBookName("Python入门");
+        book2.setPublisher("大宁电子出版社");
+        book2.setPublishDate(new Date());
+        book2.setPrice(44.6);
+        book2.setCategoryId(4);
+        bookList.add(book2);
+        SqlSession sqlSession=sqlSessionFactory.openSession();
+        BookMapper bookMapper=sqlSession.getMapper(BookMapper.class);
+        bookMapper.addBooks(bookList);
+        sqlSession.commit();
+        sqlSession.close();
+    }
 }
