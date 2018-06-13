@@ -140,30 +140,62 @@
         <trim prefix="set" suffixOverrides=",">
             <trim prefix="book_name= case" suffix="end,">
                 <foreach collection="list" item="item" index="index">
-                    <if test="item.bookName != null">
-                        when isbn=#{item.isbn} then #{item.bookName}
-                    </if>
+                    <choose>
+                        <when test="item.bookName != null">
+                            when isbn=#{item.isbn} then #{item.bookName}
+                        </when>
+                        <otherwise>
+                            when isbn=#{item.isbn} then book_name
+                        </otherwise>
+                    </choose>
                 </foreach>
             </trim>
             <trim prefix="price= case" suffix="end,">
                 <foreach collection="list" item="item" index="index">
-                    <if test="item.price > 0">
-                        when isbn=#{item.isbn} then #{item.price}
-                    </if>
+                    <choose>
+                        <when test="item.price != null">
+                            when isbn=#{item.isbn} then #{item.price}
+                        </when>
+                        <otherwise>
+                            when isbn=#{item.isbn} then price
+                        </otherwise>
+                    </choose>
                 </foreach>
             </trim>
             <trim prefix="publish_date= case" suffix="end,">
                 <foreach collection="list" item="item" index="index">
-                    <if test="item.publishDate != null">
-                        when isbn=#{item.isbn} then #{item.publishDate}
-                    </if>
+                    <choose>
+                        <when test="item.publishDate != null">
+                          when isbn=#{item.isbn} then #{item.publishDate}
+                        </when>
+                        <otherwise>
+                            when isbn=#{item.isbn} then publish_date
+                        </otherwise>
+                    </choose>
                 </foreach>
             </trim>
             <trim prefix="publisher= case" suffix="end,">
                 <foreach collection="list" item="item" index="index">
-                    <if test="item.publisher > 0">
-                        when isbn=#{item.isbn} then #{item.publisher}
-                    </if>
+                    <choose>
+                        <when test="item.publisher != null">
+                            when isbn=#{item.isbn} then #{item.publisher}
+                        </when>
+                        <otherwise>
+                            when isbn=#{item.isbn} then publisher
+                        </otherwise>
+                    </choose>
+                </foreach>
+            </trim>
+            <trim prefix="category_id= case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <choose>
+                        <when test="item.categoryId > 0 ">
+                            when isbn=#{item.isbn} then #{item.categoryId}
+                        </when>
+                        <otherwise>
+                            when isbn=#{item.isbn} then category_id
+                        </otherwise>
+                    </choose>
                 </foreach>
             </trim>
         </trim>

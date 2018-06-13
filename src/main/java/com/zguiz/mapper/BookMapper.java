@@ -4,6 +4,7 @@ import com.zguiz.bean.Book;
 import com.zguiz.bean.Category;
 import com.zguiz.bean.Pager;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 public interface BookMapper {

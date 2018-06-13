@@ -1,4 +1,4 @@
-package com.zguiz.Service;
+package com.zguiz.service.impl;
 
 import com.zguiz.bean.Book;
 import com.zguiz.bean.Cart;

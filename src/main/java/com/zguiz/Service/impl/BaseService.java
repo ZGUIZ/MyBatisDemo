@@ -1,4 +1,4 @@
-package com.zguiz.Service;
+package com.zguiz.service.impl;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
